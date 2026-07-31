@@ -4,6 +4,7 @@ import random
 board = ["", "", "", "", "", "", "", "", ""]
 win_combination = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
 
+
 def print_board(board):
     print("[TIC TAC TOE]")
     print("+---+---+---+")
@@ -20,9 +21,11 @@ def print_board(board):
             row = "|"
             
     print("")
+    
 
 def get_avaliable_moves(board):
     return [i for i, spot in enumerate(board) if spot == ""]
+
 
 def has_won(board, player):
     for combo in win_combination:
@@ -31,6 +34,7 @@ def has_won(board, player):
             return True
             
     return False
+    
 
 def get_best_move(board, depth, max_depth, maximizing):
     if depth == max_depth or has_won(board, "X") or has_won(board, "O") or len(get_avaliable_moves(board)) == 0:
@@ -76,9 +80,13 @@ def get_best_move(board, depth, max_depth, maximizing):
             return random.choice(node[value])
         
         return value
+        
 
 def play(max_depth):
-    while not has_won(board, "X") and not has_won(board, "O") and len(get_avaliable_moves(board)) > 0:
+    while True:
+        if len(get_avaliable_moves(board)) == 0:
+        	break
+        
         board[get_best_move(board, 0, max_depth, True)] = "X"
         
         if has_won(board, "X"):
