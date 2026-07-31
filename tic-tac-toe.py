@@ -1,13 +1,12 @@
-import math
-import random
+from math import inf
+from random import choice
 
 board = ["", "", "", "", "", "", "", "", ""]
 win_combination = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
 
 
 def print_board(board):
-    print("[TIC TAC TOE]")
-    print("+---+---+---+")
+    print("[TIC TAC TOE]\n+---+---+---+")
     row = "|"
     for i in range(len(board)):
         if board[i]:
@@ -48,9 +47,9 @@ def get_best_move(board, depth, max_depth, maximizing):
     node = {}
             
     if maximizing:
-        value = -math.inf
+        value = -inf
         for m in get_avaliable_moves(board):
-            clone_board = board[:]
+            clone_board = board.copy()
             clone_board[m] = "X"
             
             node_value = get_best_move(clone_board, depth + 1, max_depth, False)
@@ -60,14 +59,14 @@ def get_best_move(board, depth, max_depth, maximizing):
                 node.setdefault(node_value, []).append(m)
                 
         if depth == 0:
-            return random.choice(node[value])
+            return choice(node[value])
                 
         return value
                 
     else:
-        value = math.inf
+        value = inf
         for m in get_avaliable_moves(board):
-            clone_board = board[:]
+            clone_board = board.copy()
             clone_board[m] = "O"
             
             node_value = get_best_move(clone_board, depth + 1, max_depth, True)
@@ -77,15 +76,13 @@ def get_best_move(board, depth, max_depth, maximizing):
                 node.setdefault(node_value, []).append(m)
                     
         if depth == 0:
-            return random.choice(node[value])
+            return choice(node[value])
         
         return value
         
 
 def play(max_depth):
     while True:
-        if len(get_avaliable_moves(board)) == 0:
-        	break
         
         board[get_best_move(board, 0, max_depth, True)] = "X"
         
@@ -93,6 +90,9 @@ def play(max_depth):
         	print_board(board)
         	print("Game Over: X is winner")
         	return
+        	
+        if len(get_avaliable_moves(board)) == 0:
+        	break
         	
         board[get_best_move(board, 0, max_depth, False)] = "O"
         
@@ -104,3 +104,5 @@ def play(max_depth):
         print_board(board)
         
     print("Game Over: it's a draw")
+    
+
