@@ -18,8 +18,6 @@ def print_board(board):
             print(row)
             print("+---+---+---+")
             row = "|"
-            
-    print("")
     
 
 def get_avaliable_moves(board):
@@ -81,28 +79,29 @@ def get_best_move(board, depth, max_depth, maximizing):
         return value
         
 
+#AI vs AI
 def play(max_depth):
     while True:
-        
-        board[get_best_move(board, 0, max_depth, True)] = "X"
+        best = get_best_move(board, 0, max_depth, True)
+        board[best] = "X"
+        print_board(board)
+        print("best: " + str(best) + "\n")
         
         if has_won(board, "X"):
-        	print_board(board)
         	print("Game Over: X is winner")
         	return
         	
         if len(get_avaliable_moves(board)) == 0:
         	break
         	
-        board[get_best_move(board, 0, max_depth, False)] = "O"
+        best = get_best_move(board, 0, max_depth, False)
+        board[best] = "O"
+        print_board(board)
+        print("best: " + str(best) + "\n")
         
         if has_won(board, "O"):
-        	print_board(board)
         	print("Game Over: O is winner")
         	return
-        	
-        print_board(board)
         
     print("Game Over: it's a draw")
     
-
